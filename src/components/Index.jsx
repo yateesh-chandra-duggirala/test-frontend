@@ -7,9 +7,11 @@ import MyEvents from "../events/MyEvents";
 import PendingRequests from "../events/PendingRequests";
 import RequestEventPage from "../events/RequestEventPage";
 import EditEventPage from "../events/EditEventPage";
+import Unauthorized from "./Unauthorized";
 
 function Index() {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const userRole = localStorage.getItem("role");
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
@@ -29,7 +31,9 @@ function Index() {
 
   return (
     <div className="app">
-      <SideNavBar
+      {userRole === "ADMIN" || userRole === "USER" ? (
+        <>
+        <SideNavBar
         isNavOpen={isNavOpen}
         handleSignout={handleSignout}
       />
@@ -47,6 +51,8 @@ function Index() {
           </Routes>
         </div>
       </div>
+      </>):
+      (<div><Unauthorized/></div>)}
     </div>
   );
 }
