@@ -55,6 +55,10 @@ const EditEventPage = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const redirect = () => {
+        navigate(`/dashboard/${sourcePage}`);
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -71,6 +75,12 @@ const EditEventPage = () => {
             });
         } catch (err) {
             console.log(err);
+            Swal.fire({
+                title: err.response.data.body,
+                timer: 1500,
+                showConfirmButton: false,
+                icon: "error"
+            })
         }
         console.log("Form submitted:", formData);
     };
@@ -145,7 +155,11 @@ const EditEventPage = () => {
                         required
                     ></textarea>
                 </div>
-                <button type="submit" className="submit-btn">Update Event</button>
+                <div className="button-group">
+                    <button type="submit" className="login-submit-button">Update</button>
+                    <button type="button" className="home-button" onClick={redirect}>Cancel</button>
+                </div>
+                
             </form>
         </div>
     );
